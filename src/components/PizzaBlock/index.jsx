@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 function PizzaBlock({ title, type, size, price, count }) {
-  const [pizzaCount, setPizzaCount] = React.useState(count);
+  const pzbsar = ["тонкое", "традиционное"];
+  const pzszar = ["26 см.", "30 см.", "40 см."];
+  const [pizzaCount, setPizzaCount] = useState(count);
+  const [pizzaBase, setPizzaBase] = useState(0);
+  const [pizzaSize, setPizzaSize] = useState(0);
 
   const onClickAdd = () => {
     setPizzaCount(pizzaCount + 1);
+  };
+  const onClickPizzaBase = (base) => {
+    setPizzaBase(base);
+  };
+  const onClickPizzaSize = (size) => {
+    setPizzaSize(size);
   };
   return (
     <div className="pizza-block">
@@ -16,13 +26,24 @@ function PizzaBlock({ title, type, size, price, count }) {
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {pzbsar.map((base, index) => (
+            <li
+              className={pizzaBase === index ? "active" : ""}
+              onClick={() => onClickPizzaBase(index)}
+            >
+              {base}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {pzszar.map((size, index) => (
+            <li
+              className={pizzaSize === index ? "active" : ""}
+              onClick={() => onClickPizzaSize(index)}
+            >
+              {size}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
