@@ -10,6 +10,14 @@ function PizzaBlock({
   category,
   rating,
 }) {
+  const [activeType, setActiveType] = useState(types[0]);
+  const [activeSize, setActiveSize] = useState(sizes[0]);
+  const [pizzaCount, setPizzaCount] = useState(0);
+
+  const onClickAdd = () => {
+    setPizzaCount((prev) => prev + 1);
+  };
+
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -17,18 +25,31 @@ function PizzaBlock({
       <div className="pizza-block__selector">
         <ul>
           {types.map((type) => (
-            <li className="active">{type}</li>
+            <li
+              className={type === activeType ? "active" : ""}
+              onClick={() => setActiveType(type)}
+            >
+              {type ? "Традиционное" : "Тонкое"}
+            </li>
           ))}
         </ul>
         <ul>
           {sizes.map((size) => (
-            <li className="active">{size}</li>
+            <li
+              className={size === activeSize ? "active" : ""}
+              onClick={() => setActiveSize(size)}
+            >
+              {size + " см."}
+            </li>
           ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">{"от " + price + " ₽"}</div>
-        <div className="button button--outline button--add">
+        <div
+          className="button button--outline button--add"
+          onClick={onClickAdd}
+        >
           <svg
             width="12"
             height="12"
@@ -42,7 +63,7 @@ function PizzaBlock({
             />
           </svg>
           <span>Добавить</span>
-          <i>0</i>
+          <i>{pizzaCount}</i>
         </div>
       </div>
     </div>
