@@ -29,4 +29,12 @@
       color: #7b7b7b;
     }
   }
+  @media screen and (max-width: 600px) {
+    .container {
+      flex-direction: column;
+    }
+    &__logo {
+      margin-bottom: 40px;
+    }
+  }
 }
