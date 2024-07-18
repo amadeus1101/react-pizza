@@ -5,6 +5,7 @@ import Categories from "../components/Categories";
 import { UTILITIES_URL } from "../constants";
 import { useFetch } from "../hooks/useFetch";
 import { useSort } from "../hooks/useSort";
+import Pagination from "../components/Pagination";
 
 function Home({ products, loading, error }) {
   const [tools, tools_loading, tools_error] = useFetch(UTILITIES_URL);
@@ -29,6 +30,7 @@ function Home({ products, loading, error }) {
           {products.length > 0 &&
             products.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
         </div>
+        <Pagination />
       </div>
     </div>
   );
