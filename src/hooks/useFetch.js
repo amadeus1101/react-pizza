@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 
-const BASE_URL = "https://63fe15b61626c165a0a7034c.mockapi.io/pizzas";
-
-export function useFetch() {
+export function useFetch(url, deps = []) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     setLoading(true);
-    fetch(BASE_URL)
+    fetch(url)
       .then((res) => res.json())
       .then((json) => {
         setData(json);
@@ -20,7 +18,7 @@ export function useFetch() {
         setError("An error occured. Awkward...");
         setLoading(false);
       });
-  }, []);
+  }, deps);
 
-  return { data, loading, error };
+  return [data, loading, error];
 }

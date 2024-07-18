@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Input from "../Input";
 
 const Header = () => {
   return (
@@ -13,6 +14,7 @@ const Header = () => {
             </div>
           </div>
         </Link>
+        <Input />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>
