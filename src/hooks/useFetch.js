@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-export function useFetch(url, deps = []) {
+export function useFetch(url, category, sort) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     setLoading(true);
-    fetch(url)
+    fetch(deps[0] !== 0 ? url + "?category=" + deps[0] : url)
       .then((res) => res.json())
       .then((json) => {
         setData(json);
@@ -18,7 +18,7 @@ export function useFetch(url, deps = []) {
         setError("An error occured. Awkward...");
         setLoading(false);
       });
-  }, deps);
+  }, [category, sort]);
 
   return [data, loading, error];
 }

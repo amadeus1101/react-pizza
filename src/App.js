@@ -2,38 +2,59 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import { Routes, Route } from "react-router-dom";
-import { queryContext } from "./queryContext";
 
 import "./scss/app.scss";
-import { useFetch } from "./hooks/useFetch";
 import { DATA_URL } from "./constants";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [products, products_loading, products_error] = useFetch(
-    DATA_URL,
-    query
-  );
+  const { categoryId, sort } = useSelector((state) => state.filter);
+
+  /**************************DATA FETCH****************************** */
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let URL = DATA_URL;
+    if (categoryId !== 0) {
+      URL +=
+        "?category=" +
+        categoryId +
+        "&sortby=" +
+        sort.sortType +
+        "&order=" +
+        sort.order;
+    } else {
+      URL += "?sortby=" + sort.sortType + "&order=" + sort.order;
+    }
+    setLoading(true);
+    fetch(URL)
+      .then((res) => res.json())
+      .then((json) => {
+        setProducts(json);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError("An error occured. Awkward...");
+        setLoading(false);
+      });
+  }, [categoryId, sort]);
+  /**************************************************************************** */
+
   return (
-    <queryContext.Provider>
-      <div className="wrapper">
-        <Header />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                products={products}
-                loading={products_loading}
-                error={products_error}
-              />
-            }
-          />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
-      </div>
-    </queryContext.Provider>
+    <div className="wrapper">
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={<Home products={products} loading={loading} error={error} />}
+        />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </div>
   );
 }
 
