@@ -15,7 +15,7 @@ function Input() {
   };
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log("poisk... => ", searchValue);
+      dispatch(setQuery(searchValue));
     }, 500);
     return () => clearTimeout(timer);
   }, [searchValue]);
