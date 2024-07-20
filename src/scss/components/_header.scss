@@ -12,12 +12,36 @@
     justify-items: end;
     .search_input {
       width: 400px;
+      position: relative;
       input {
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         font-size: 16px;
         padding: 12px 20px 12px 42px;
         width: 100%;
+      }
+      .search-icon,
+      .close-icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-40%);
+        margin: 0 15px;
+        z-index: 100;
+        background: #fff;
+        img {
+          width: 16px;
+          height: 16px;
+          opacity: 0.5;
+        }
+      }
+      .search-icon {
+        left: 0;
+      }
+      .close-icon {
+        right: 0;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

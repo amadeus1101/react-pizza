@@ -1,17 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../../redux/slices/filterSlice";
 
 let pages = [1, 2, 3];
-const MAXPAGE = 10;
+const MAXPAGE = 3;
 
 function Pagination() {
-  const [activePage, setActivePage] = useState(1);
+  const activePage = useSelector((state) => state.filter.page);
+  const dispatch = useDispatch();
 
   const stepBack = () => {
     if (activePage > 1) {
       if (activePage === pages[0]) {
         pages = pages.map((page) => page - 1);
       }
-      setActivePage((prev) => prev - 1);
+      dispatch(setCurrentPage(activePage - 1));
     }
   };
   const stepForward = () => {
@@ -19,8 +22,11 @@ function Pagination() {
       if (activePage === pages[2]) {
         pages = pages.map((page) => page + 1);
       }
-      setActivePage((prev) => prev + 1);
+      dispatch(setCurrentPage(activePage + 1));
     }
+  };
+  const onClickPage = (pg) => {
+    dispatch(setCurrentPage(pg));
   };
 
   return (
@@ -31,7 +37,7 @@ function Pagination() {
           <li
             key={page}
             className={page === activePage ? "active" : ""}
-            onClick={() => setActivePage(page)}
+            onClick={() => onClickPage(page)}
           >
             {page}
           </li>

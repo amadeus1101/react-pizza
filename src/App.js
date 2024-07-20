@@ -9,28 +9,22 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 function App() {
-  const { categoryId, sort } = useSelector((state) => state.filter);
+  const { categoryId, sort, query, page } = useSelector(
+    (state) => state.filter
+  );
 
   /**************************DATA FETCH****************************** */
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  //url ?page=${}&limit=4&${category}&sortby=${}&order=${}${search}
   useEffect(() => {
-    let URL = DATA_URL;
-    if (categoryId !== 0) {
-      URL +=
-        "?category=" +
-        categoryId +
-        "&sortby=" +
-        sort.sortType +
-        "&order=" +
-        sort.order;
-    } else {
-      URL += "?sortby=" + sort.sortType + "&order=" + sort.order;
-    }
     setLoading(true);
-    fetch(URL)
+    fetch(
+      `${DATA_URL}?page=${page}&limit=4${
+        categoryId !== 0 ? "&category=" + categoryId : ""
+      }&sortby=${sort.sortType}&order=${sort.order}`
+    )
       .then((res) => res.json())
       .then((json) => {
         setProducts(json);
@@ -41,7 +35,7 @@ function App() {
         setError("An error occured. Awkward...");
         setLoading(false);
       });
-  }, [categoryId, sort]);
+  }, [categoryId, sort, page, query]);
   /**************************************************************************** */
 
   return (
