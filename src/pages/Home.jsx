@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { DATA_URL } from "../constants";
+
 import PizzaBlock from "../components/PizzaBlock";
 import Sort from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
-import { DATA_URL } from "../constants";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 function Home() {
   const { categoryId, sort, query, page } = useSelector(
