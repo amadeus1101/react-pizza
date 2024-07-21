@@ -11,20 +11,20 @@ function Home() {
   const { categoryId, sort, query, page } = useSelector(
     (state) => state.filter
   );
-
+  const category = categoryId !== 0 ? "&category=" + categoryId : "";
+  const sortType = "&sortby=" + sort.sortType;
+  const order = "&order=" + sort.order;
+  const currentPage = "page=" + page;
+  const productsLimit = "&limit=" + 4;
+  const search = query.length > 0 ? "&search=" + query : "";
   /**************************DATA FETCH****************************** */
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState("");
-  //url ?page=${}&limit=4&${category}&sortby=${}&order=${}${search}
   useEffect(() => {
     setLoading(true);
     fetch(
-      `${DATA_URL}?page=${page}&limit=4${
-        categoryId !== 0 ? "&category=" + categoryId : ""
-      }&sortby=${sort.sortType}&order=${sort.order}${
-        query.length > 0 ? "&search=" + query : ""
-      }`
+      DATA_URL + "?" + currentPage + productsLimit + category + sortType + order + search
     )
       .then((res) => res.json())
       .then((json) => {
@@ -36,7 +36,7 @@ function Home() {
         setError("An error occured. Awkward...");
         setLoading(false);
       });
-  }, [categoryId, sort, page, query]);
+  }, [category, sortType, order, currentPage, search]);
   /**************************************************************************** */
 
   return (
