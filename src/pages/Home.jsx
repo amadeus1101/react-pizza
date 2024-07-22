@@ -6,6 +6,7 @@ import PizzaBlock from "../components/PizzaBlock";
 import Sort from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
+import PizzaBlockSkeleton from "../components/PizzaBlock/skeleton";
 
 function Home() {
   const { categoryId, sort, query, page } = useSelector(
@@ -24,7 +25,14 @@ function Home() {
   useEffect(() => {
     setLoading(true);
     fetch(
-      DATA_URL + "?" + currentPage + productsLimit + category + sortType + order + search
+      DATA_URL +
+        "?" +
+        currentPage +
+        productsLimit +
+        category +
+        sortType +
+        order +
+        search
     )
       .then((res) => res.json())
       .then((json) => {
@@ -47,12 +55,23 @@ function Home() {
           <Sort />
         </div>
         <h2 className="content__title">Все пиццы</h2>
-
-        <div className="content__items">
-          {products.length > 0 &&
-            products.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
-        </div>
-        <Pagination />
+        {isLoading ? (
+          <div className="content__items">
+            {[1, 2, 3, 4].map((el) => (
+              <PizzaBlockSkeleton />
+            ))}
+          </div>
+        ) : (
+          <>
+            <div className="content__items">
+              {products.length > 0 &&
+                products.map((pizza) => (
+                  <PizzaBlock key={pizza.id} {...pizza} />
+                ))}
+            </div>
+            <Pagination />
+          </>
+        )}
       </div>
     </div>
   );
