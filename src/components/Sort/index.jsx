@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSort } from "../../redux/slices/filterSlice";
-
-const sortArray = [
-  { name: "популярности 🔽", sortType: "rating", order: "asc" },
-  { name: "популярности 🔼", sortType: "rating", order: "desc" },
-  { name: "цене 🔽", sortType: "price", order: "asc" },
-  { name: "цене 🔼", sortType: "price", order: "desc" },
-  { name: "алфавиту 🔽", sortType: "title", order: "asc" },
-  { name: "алфавиту 🔼", sortType: "title", order: "desc" },
-];
+import { sortArray } from "../../constants";
 
 function Sort() {
   const sort = useSelector((state) => state.filter.sort);
