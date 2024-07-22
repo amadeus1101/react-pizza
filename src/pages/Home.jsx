@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import qs from "qs";
+import { useDispatch, useSelector } from "react-redux";
 import { DATA_URL } from "../constants";
 
 import PizzaBlock from "../components/PizzaBlock";
@@ -7,22 +9,58 @@ import Sort from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import PizzaBlockSkeleton from "../components/PizzaBlock/skeleton";
+import { setFilters } from "../redux/slices/filterSlice";
 
 function Home() {
   const { categoryId, sort, query, page } = useSelector(
     (state) => state.filter
   );
+  // const {...} = useSelector(selectFilter);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (!isMounted.current) {
+      const queryString = qs.stringify({
+        category: categoryId,
+        sortby: sort.sortType,
+        order: sort.order,
+        page: page,
+      });
+
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [category, sortType, order, currentPage]);
+
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      //const sort = sortArray.find((obj) => obj.sortProperty === params.sortProperty);
+      dispatch(setFilters(...params, sort));
+      isSearch.current = true;
+    }
+  }, []);
+
+  /**************************DATA FETCH****************************** */
   const category = categoryId !== 0 ? "&category=" + categoryId : "";
   const sortType = "&sortby=" + sort.sortType;
   const order = "&order=" + sort.order;
   const currentPage = "page=" + page;
   const productsLimit = "&limit=" + 4;
   const search = query.length > 0 ? "&search=" + query : "";
-  /**************************DATA FETCH****************************** */
+
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState("");
   useEffect(() => {
+    //window.srollTo(0, 0);
+    if (!isSearch.current)
+      //fetchAPI(///)
+      isSearch.current = false;
+
     setLoading(true);
     fetch(
       DATA_URL +
