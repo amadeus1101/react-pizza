@@ -15,11 +15,11 @@ function Home() {
   console.log("**Home render");
   //redux
   const { category, sort, search, page } = useSelector((state) => state.filter);
-  //fetch
+  //fetch pizzas
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState("");
-  //url
+  //query url params
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);

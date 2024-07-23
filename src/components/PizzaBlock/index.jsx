@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
 
 function PizzaBlock({
   id,
@@ -10,12 +12,14 @@ function PizzaBlock({
   category,
   rating,
 }) {
-  const [activeType, setActiveType] = useState(types[0]);
-  const [activeSize, setActiveSize] = useState(sizes[0]);
-  const [pizzaCount, setPizzaCount] = useState(0);
+  const [type, setType] = useState(types[0]);
+  const [size, setSize] = useState(sizes[0]);
+  const dispatch = useDispatch();
 
   const onClickAdd = () => {
-    setPizzaCount((prev) => prev + 1);
+    dispatch(
+      addItem({ id, title, imageUrl, price, size, type, category, rating })
+    );
   };
 
   return (
@@ -24,24 +28,24 @@ function PizzaBlock({
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {types.map((type) => (
+          {types.map((t) => (
             <li
-              key={type}
-              className={type === activeType ? "active" : ""}
-              onClick={() => setActiveType(type)}
+              key={t}
+              className={t === type ? "active" : ""}
+              onClick={() => setType(t)}
             >
-              {type ? "Традиционное" : "Тонкое"}
+              {t ? "Традиционное" : "Тонкое"}
             </li>
           ))}
         </ul>
         <ul>
-          {sizes.map((size) => (
+          {sizes.map((s) => (
             <li
-              key={size}
-              className={size === activeSize ? "active" : ""}
-              onClick={() => setActiveSize(size)}
+              key={s}
+              className={s === size ? "active" : ""}
+              onClick={() => setSize(s)}
             >
-              {size + " см."}
+              {s + " см."}
             </li>
           ))}
         </ul>
@@ -65,7 +69,7 @@ function PizzaBlock({
             />
           </svg>
           <span>Добавить</span>
-          <i>{pizzaCount}</i>
+          <i>{"0"}</i>
         </div>
       </div>
     </div>
