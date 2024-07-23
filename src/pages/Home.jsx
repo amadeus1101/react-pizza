@@ -43,6 +43,19 @@ function Home() {
   };
 
   useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        page: page,
+        category: category,
+        sortby: sort.sortType,
+        order: sort.order,
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [category, sort.sortType, sort.order, page]);
+
+  useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
       let name;
@@ -68,18 +81,6 @@ function Home() {
     isSearch.current = false;
   }, [category, sort.sortType, sort.order, page, search]);
 
-  useEffect(() => {
-    if (isMounted.current) {
-      const queryString = qs.stringify({
-        page: page,
-        category: category,
-        sortby: sort.sortType,
-        order: sort.order,
-      });
-      navigate(`?${queryString}`);
-    }
-    isMounted.current = true;
-  }, [category, sort.sortType, sort.order, page]);
   return (
     <div className="content">
       <div className="container">
