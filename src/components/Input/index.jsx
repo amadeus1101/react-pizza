@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setQuery } from "../../redux/slices/filterSlice";
+import { setSearch } from "../../redux/slices/filterSlice";
 
 function Input() {
   const [searchValue, setSearchValue] = useState("");
@@ -15,7 +15,7 @@ function Input() {
   };
   useEffect(() => {
     const timer = setTimeout(() => {
-      dispatch(setQuery(searchValue));
+      dispatch(setSearch(searchValue));
     }, 500);
     return () => clearTimeout(timer);
   }, [searchValue]);

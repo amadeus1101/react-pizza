@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import "./scss/app.scss";
 
 function App() {
+  console.log("APP render");
   return (
     <div className="wrapper">
       <Header />

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 import { useDispatch, useSelector } from "react-redux";
-import { DATA_URL } from "../constants";
+import { DATA_URL, sortArray } from "../constants";
 
 import PizzaBlock from "../components/PizzaBlock";
 import Sort from "../components/Sort";
@@ -12,68 +12,44 @@ import PizzaBlockSkeleton from "../components/PizzaBlock/skeleton";
 import { setFilters } from "../redux/slices/filterSlice";
 
 function Home() {
-  const { categoryId, sort, query, page } = useSelector(
-    (state) => state.filter
-  );
-  // const {...} = useSelector(selectFilter);
+  console.log("**Home render");
+  const { category, sort, search, page } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
-    if (!isMounted.current) {
-      const queryString = qs.stringify({
-        category: categoryId,
-        sortby: sort.sortType,
-        order: sort.order,
-        page: page,
-      });
-
-      navigate(`?${queryString}`);
-    }
-    isMounted.current = true;
-  }, [category, sortType, order, currentPage]);
-
-  useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      //const sort = sortArray.find((obj) => obj.sortProperty === params.sortProperty);
-      dispatch(setFilters(...params, sort));
-      isSearch.current = true;
+      let name;
+      sortArray.forEach((el) => {
+        if (el.sortType === params.sortby && el.order === params.order)
+          name = el.name;
+      });
+      dispatch(setFilters({ ...params, name }));
+      //isSearch.current = true;
     }
   }, []);
-
   /**************************DATA FETCH****************************** */
-  const category = categoryId !== 0 ? "&category=" + categoryId : "";
-  const sortType = "&sortby=" + sort.sortType;
-  const order = "&order=" + sort.order;
-  const currentPage = "page=" + page;
-  const productsLimit = "&limit=" + 4;
-  const search = query.length > 0 ? "&search=" + query : "";
-
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState("");
-  useEffect(() => {
-    //window.srollTo(0, 0);
-    if (!isSearch.current)
-      //fetchAPI(///)
-      isSearch.current = false;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // if (!isSearch.current) {
+    const endpoint = `?page=${page}&limit=4${
+      category !== 0 ? "&category=" + category : ""
+    }&sortby=${sort.sortType}&order=${sort.order}${
+      search ? "&search=" + search : ""
+    }`;
+    setError(false);
     setLoading(true);
-    fetch(
-      DATA_URL +
-        "?" +
-        currentPage +
-        productsLimit +
-        category +
-        sortType +
-        order +
-        search
-    )
+    fetch(DATA_URL + endpoint)
       .then((res) => res.json())
       .then((json) => {
+        if (json === "Not found") throw new Error("Incorrect search value");
         setProducts(json);
         setLoading(false);
       })
@@ -82,9 +58,22 @@ function Home() {
         setError("An error occured. Awkward...");
         setLoading(false);
       });
-  }, [category, sortType, order, currentPage, search]);
+    // }
+    // isSearch.current = false;
+  }, [category, sort.sortType, sort.order, page, search]);
   /**************************************************************************** */
-
+  useEffect(() => {
+    // if (!isMounted.current) {
+    const queryString = qs.stringify({
+      page: page,
+      category: category,
+      sortby: sort.sortType,
+      order: sort.order,
+    });
+    navigate(`?${queryString}`);
+    // }
+    // isMounted.current = true;
+  }, [category, sort.sortType, sort.order, page]);
   return (
     <div className="content">
       <div className="container">
@@ -92,11 +81,15 @@ function Home() {
           <Categories />
           <Sort />
         </div>
-        <h2 className="content__title">Все пиццы</h2>
+        <h2 className="content__title">
+          {!isError
+            ? "Все пиццы"
+            : "По запросу ничего не найдено, вот похожие пиццы ;("}
+        </h2>
         {isLoading ? (
           <div className="content__items">
             {[1, 2, 3, 4].map((el) => (
-              <PizzaBlockSkeleton />
+              <PizzaBlockSkeleton key={el} />
             ))}
           </div>
         ) : (

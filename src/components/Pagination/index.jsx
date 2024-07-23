@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPage } from "../../redux/slices/filterSlice";
+import { setPage } from "../../redux/slices/filterSlice";
 
 let pages = [1, 2, 3];
 const MAXPAGE = 3;
@@ -14,7 +14,7 @@ function Pagination() {
       if (activePage === pages[0]) {
         pages = pages.map((page) => page - 1);
       }
-      dispatch(setCurrentPage(activePage - 1));
+      dispatch(setPage(activePage - 1));
     }
   };
   const stepForward = () => {
@@ -22,11 +22,11 @@ function Pagination() {
       if (activePage === pages[2]) {
         pages = pages.map((page) => page + 1);
       }
-      dispatch(setCurrentPage(activePage + 1));
+      dispatch(setPage(activePage + 1));
     }
   };
   const onClickPage = (pg) => {
-    dispatch(setCurrentPage(pg));
+    dispatch(setPage(pg));
   };
 
   return (
