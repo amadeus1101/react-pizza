@@ -6,6 +6,7 @@ import { clearCart } from "../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
 
 function Cart() {
+  console.log("**cart render");
   const { cart, totalCount, totalPrice } = useSelector(
     (state) => state.cartParams
   );

@@ -1,6 +1,7 @@
 @import "../variables";
 
 .pagination {
+  margin: 30px 0;
   width: 100%;
   ul {
     display: flex;
@@ -17,7 +18,7 @@
       font-size: 16px;
       font-weight: 600;
       color: #000;
-      line-height: 42;
+
       user-select: none;
       &.active {
         color: #fff;

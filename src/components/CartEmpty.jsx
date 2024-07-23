@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function CartEmpty() {
   return (
-    <div class="cart cart--empty">
+    <div className="cart cart--empty">
       <Notification
         headline={"Корзина пустая "}
         paragraph1={"Вероятней всего, вы не заказывали ещё пиццу."}
@@ -13,7 +13,7 @@ function CartEmpty() {
         }
       />
       <img src="img/empty-cart.png" alt="Empty cart" />
-      <Link class="button button--black" to="/">
+      <Link className="button button--black" to="/">
         <span>Вернуться назад</span>
       </Link>
     </div>
