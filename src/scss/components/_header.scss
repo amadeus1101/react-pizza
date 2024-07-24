@@ -5,11 +5,10 @@
   padding: 40px 0;
 
   .container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 7%;
+    display: flex;
+    column-gap: 10%;
     align-items: center;
-    justify-items: end;
+    justify-content: space-around;
     .search_input {
       width: 400px;
       position: relative;
