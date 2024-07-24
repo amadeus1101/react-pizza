@@ -8,38 +8,27 @@ import PizzaBlock from "../components/PizzaBlock";
 import Sort from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
-import PizzaBlockSkeleton from "../components/PizzaBlock/skeleton";
+import PizzaSkeleton from "../components/PizzaBlock/skeleton";
 import { setFilters } from "../redux/slices/filterSlice";
+import { setItems, fetchData } from "../redux/slices/pizzaSlice";
+import Notification from "../components/Notification";
 
 function Home() {
   console.log("**Home render");
   //redux
   const { category, sort, search, page } = useSelector((state) => state.filter);
-  //fetch pizzas
-  const [products, setProducts] = useState([]);
-  const [isLoading, setLoading] = useState(false);
-  const [isError, setError] = useState("");
+  const { items, status } = useSelector((state) => state.pizza);
   //query url params
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const fetchData = (url, endpoint) => {
-    setError(false);
-    setLoading(true);
-    fetch(url + endpoint)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json === "Not found") throw new Error("Incorrect search value");
-        setProducts(json);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setError("An error occured. Awkward...");
-        setLoading(false);
-      });
+  const getData = () => {
+    const sortby = sort.sortType;
+    const order = sort.order;
+    dispatch(fetchData({ sortby, order, category, search, page }));
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -69,17 +58,13 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    if (!isSearch.current) {
-      const endpoint = `?page=${page}&limit=4${
-        category !== 0 ? "&category=" + category : ""
-      }&sortby=${sort.sortType}&order=${sort.order}${
-        search ? "&search=" + search : ""
-      }`;
-      fetchData(DATA_URL, endpoint);
-    }
-    isSearch.current = false;
+    getData();
   }, [category, sort.sortType, sort.order, page, search]);
+
+  const skeletons = [...new Array(4)].map((_, index) => (
+    <PizzaSkeleton key={index} />
+  ));
+  const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
 
   return (
     <div className="content">
@@ -88,24 +73,17 @@ function Home() {
           <Categories />
           <Sort />
         </div>
-        <h2 className="content__title">
-          {!isError
-            ? "Все пиццы"
-            : "По запросу ничего не найдено, вот похожие пиццы ;("}
-        </h2>
-        {isLoading ? (
-          <div className="content__items">
-            {[1, 2, 3, 4].map((el) => (
-              <PizzaBlockSkeleton key={el} />
-            ))}
-          </div>
+        {status === "error" ? (
+          <Notification
+            headline={"Произошла ошибка "}
+            paragraph1={"К сожалению, не удалось получить питсы."}
+            paragraph2={"Попробуйте повторить попытку позже."}
+          />
         ) : (
           <>
+            <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-              {products.length > 0 &&
-                products.map((pizza) => (
-                  <PizzaBlock key={pizza.id} {...pizza} />
-                ))}
+              {status === "success" ? pizzas : skeletons}
             </div>
             <Pagination />
           </>

@@ -1,4 +1,4 @@
-function PizzaBlockSkeleton() {
+function PizzaSkeleton() {
   return (
     <div className="pizza-block skeleton">
       <div className="round"></div>
@@ -8,4 +8,4 @@ function PizzaBlockSkeleton() {
   );
 }
 
-export default PizzaBlockSkeleton;
+export default PizzaSkeleton;
