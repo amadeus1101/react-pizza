@@ -1,0 +1,7 @@
+1. Working filtration
+2. Sorting
+3. Pagination
+4. Search
+5. Redux 1-4
+
+url ?page=${}&limit=4&${category}&sortby=${}&order=${}${search}
