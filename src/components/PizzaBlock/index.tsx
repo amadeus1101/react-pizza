@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
+import { pizzaItem } from "../../@types/pizzaItem";
 
-function PizzaBlock({
+const PizzaBlock: React.FC<pizzaItem> = ({
   id,
   title,
   imageUrl,
@@ -11,7 +12,7 @@ function PizzaBlock({
   price,
   category,
   rating,
-}) {
+}) => {
   const [type, setType] = useState(types[0]);
   const [size, setSize] = useState(sizes[0]);
   const dispatch = useDispatch();
@@ -74,6 +75,6 @@ function PizzaBlock({
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

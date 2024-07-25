@@ -11,11 +11,11 @@ const categories = [
   "Закрытые",
 ];
 
-function Categories() {
-  const categoryId = useSelector((state) => state.filter.category);
+const Categories: React.FC = () => {
+  const categoryId = useSelector((state: any) => state.filter.category);
   const dispatch = useDispatch();
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategory(id));
   };
 
@@ -34,6 +34,6 @@ function Categories() {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;

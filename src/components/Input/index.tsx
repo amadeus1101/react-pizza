@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSearch } from "../../redux/slices/filterSlice";
 
-function Input() {
+const Input: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const onChangeInput = (query) => {
+  const onChangeInput = (query: string) => {
     setSearchValue(query);
   };
   const onClearInput = () => {
     setSearchValue("");
-    inputRef.current.focus();
+    if (inputRef.current) inputRef.current.focus();
   };
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,6 +38,6 @@ function Input() {
       )}
     </div>
   );
-}
+};
 
 export default Input;

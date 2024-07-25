@@ -12,15 +12,3 @@ export const sortArray = [
   { name: "алфавиту 🔽", sortType: "title", order: "asc" },
   { name: "алфавиту 🔼", sortType: "title", order: "desc" },
 ];
-
-export const item = {
-  id: 0,
-  title: "",
-  imageUrl: "",
-  price: 0,
-  size: 0,
-  type: 0,
-  category: 0,
-  rating: 0,
-  count: 0,
-};

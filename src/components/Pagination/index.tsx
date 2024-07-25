@@ -5,8 +5,8 @@ import { setPage } from "../../redux/slices/filterSlice";
 let pages = [1, 2, 3];
 const MAXPAGE = 3;
 
-function Pagination() {
-  const activePage = useSelector((state) => state.filter.page);
+const Pagination: React.FC = () => {
+  const activePage = useSelector((state: any) => state.filter.page);
   const dispatch = useDispatch();
 
   const stepBack = () => {
@@ -25,7 +25,7 @@ function Pagination() {
       dispatch(setPage(activePage + 1));
     }
   };
-  const onClickPage = (pg) => {
+  const onClickPage = (pg: number) => {
     dispatch(setPage(pg));
   };
 
@@ -46,6 +46,6 @@ function Pagination() {
       </ul>
     </div>
   );
-}
+};
 
 export default Pagination;

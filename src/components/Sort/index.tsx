@@ -2,16 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSort } from "../../redux/slices/filterSlice";
 import { sortArray } from "../../constants";
+import { sortType } from "../../@types/sortType";
 
 function Sort() {
-  const sort = useSelector((state) => state.filter.sort);
+  const sort = useSelector((state: any) => state.filter.sort);
   const dispatch = useDispatch();
   const [isSortOpened, setSortOpened] = useState(false);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClick = (event) => {
-      if (isSortOpened && !event.composedPath().includes(sortRef.current)) {
+    const handleClick = (event: MouseEvent) => {
+      if (
+        isSortOpened &&
+        sortRef.current &&
+        !event.composedPath().includes(sortRef.current)
+      ) {
         setSortOpened(false);
       }
     };
@@ -22,7 +27,7 @@ function Sort() {
     };
   });
 
-  const onChangeSort = (obj) => {
+  const onChangeSort = (obj: sortType) => {
     if (obj.name !== sort.name) {
       setSortOpened(false);
       dispatch(setSort(obj));

@@ -12,12 +12,15 @@ import PizzaSkeleton from "../components/PizzaBlock/skeleton";
 import { setFilters } from "../redux/slices/filterSlice";
 import { setItems, fetchData } from "../redux/slices/pizzaSlice";
 import Notification from "../components/Notification";
+import { pizzaItem } from "../@types/pizzaItem";
 
 function Home() {
   console.log("**Home render");
   //redux
-  const { category, sort, search, page } = useSelector((state) => state.filter);
-  const { items, status } = useSelector((state) => state.pizza);
+  const { category, sort, search, page } = useSelector(
+    (state: any) => state.filter
+  );
+  const { items, status } = useSelector((state: any) => state.pizza);
   //query url params
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +30,7 @@ function Home() {
   const getData = () => {
     const sortby = sort.sortType;
     const order = sort.order;
+    //@ts-ignore
     dispatch(fetchData({ sortby, order, category, search, page }));
     window.scrollTo(0, 0);
   };
@@ -64,7 +68,9 @@ function Home() {
   const skeletons = [...new Array(4)].map((_, index) => (
     <PizzaSkeleton key={index} />
   ));
-  const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
+  const pizzas = items.map((pizza: pizzaItem) => (
+    <PizzaBlock key={pizza.id} {...pizza} />
+  ));
 
   return (
     <div className="content">

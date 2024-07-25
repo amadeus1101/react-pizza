@@ -3,7 +3,9 @@ import Input from "../Input";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const { totalCount, totalPrice } = useSelector((state) => state.cartParams);
+  const { totalCount, totalPrice } = useSelector(
+    (state: any) => state.cartParams
+  );
   const { pathname } = useLocation();
   return (
     <div className="header">

@@ -1,6 +1,11 @@
 import React from "react";
+import { NotificationType } from "../@types/notificationType";
 
-function Notification({ headline, paragraph1, paragraph2 }) {
+const Notification: React.FC<NotificationType> = ({
+  headline,
+  paragraph1,
+  paragraph2,
+}) => {
   return (
     <div className="notification">
       <h2>
@@ -11,6 +16,6 @@ function Notification({ headline, paragraph1, paragraph2 }) {
       <p>{paragraph2}</p>
     </div>
   );
-}
+};
 
 export default Notification;

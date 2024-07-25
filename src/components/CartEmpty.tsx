@@ -2,7 +2,7 @@ import React from "react";
 import Notification from "./Notification";
 import { Link } from "react-router-dom";
 
-function CartEmpty() {
+const CartEmpty: React.FC = () => {
   return (
     <div className="cart cart--empty">
       <Notification
@@ -18,6 +18,6 @@ function CartEmpty() {
       </Link>
     </div>
   );
-}
+};
 
 export default CartEmpty;

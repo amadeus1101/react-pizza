@@ -4,15 +4,17 @@ import CartEmpty from "../components/CartEmpty";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
+import { cartItem } from "../@types/cartItem";
 
-function Cart() {
+const Cart: React.FC = () => {
   console.log("**cart render");
   const { cart, totalCount, totalPrice } = useSelector(
-    (state) => state.cartParams
+    (state: any) => state.cartParams
   );
   const dispatch = useDispatch();
 
   const onClickClear = () => {
+    //@ts-ignore
     dispatch(clearCart());
   };
   return (
@@ -95,7 +97,7 @@ function Cart() {
               </div>
             </div>
             <div className="cart__items">
-              {cart.map((item) => (
+              {cart.map((item: cartItem) => (
                 <CartItem key={item.hash} {...item} />
               ))}
             </div>
@@ -145,6 +147,6 @@ function Cart() {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;

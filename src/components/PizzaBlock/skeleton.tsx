@@ -1,4 +1,6 @@
-function PizzaSkeleton() {
+import React from "react";
+
+const PizzaSkeleton: React.FC = () => {
   return (
     <div className="pizza-block skeleton">
       <div className="round"></div>
@@ -6,6 +8,6 @@ function PizzaSkeleton() {
       <div className="polygon"></div>
     </div>
   );
-}
+};
 
 export default PizzaSkeleton;

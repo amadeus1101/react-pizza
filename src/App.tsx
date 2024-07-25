@@ -12,8 +12,11 @@ function App() {
   console.log("APP render");
   const dispatch = useDispatch();
   useEffect(() => {
-    const cartData = JSON.parse(localStorage.getItem("react-pizza"));
-    if (cartData) dispatch(setCartData(cartData));
+    const localStoreData = localStorage.getItem("react-pizza");
+    if (localStoreData) {
+      const cartData = JSON.parse(localStoreData);
+      if (cartData) dispatch(setCartData(cartData));
+    }
   }, []);
   return (
     <div className="wrapper">
