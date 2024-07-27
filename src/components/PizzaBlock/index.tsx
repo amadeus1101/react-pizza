@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
-import { pizzaItem } from "../../@types/pizzaItem";
+import { pizzaItemType } from "../../@types/pizzaItemType";
+import { AppDispatch } from "../../redux/store";
 
-const PizzaBlock: React.FC<pizzaItem> = ({
+const PizzaBlock: React.FC<pizzaItemType> = ({
   id,
   title,
   imageUrl,
@@ -15,7 +16,7 @@ const PizzaBlock: React.FC<pizzaItem> = ({
 }) => {
   const [type, setType] = useState(types[0]);
   const [size, setSize] = useState(sizes[0]);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const onClickAdd = () => {
     dispatch(

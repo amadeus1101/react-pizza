@@ -12,15 +12,15 @@ import PizzaSkeleton from "../components/PizzaBlock/skeleton";
 import { setFilters } from "../redux/slices/filterSlice";
 import { setItems, fetchData } from "../redux/slices/pizzaSlice";
 import Notification from "../components/Notification";
-import { pizzaItem } from "../@types/pizzaItem";
+import { pizzaItemType } from "../@types/pizzaItemType";
+import { filterSelector } from "../redux/selectors/filterSelector";
+import { pizzaSelector } from "../redux/selectors/pizzaSelector";
 
 function Home() {
   console.log("**Home render");
   //redux
-  const { category, sort, search, page } = useSelector(
-    (state: any) => state.filter
-  );
-  const { items, status } = useSelector((state: any) => state.pizza);
+  const { category, sort, search, page } = useSelector(filterSelector);
+  const { items, status } = useSelector(pizzaSelector);
   //query url params
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,10 +28,8 @@ function Home() {
   const isMounted = useRef(false);
 
   const getData = () => {
-    const sortby = sort.sortType;
-    const order = sort.order;
     //@ts-ignore
-    dispatch(fetchData({ sortby, order, category, search, page }));
+    dispatch(fetchData({ sort, category, search, page }));
     window.scrollTo(0, 0);
   };
 
@@ -40,20 +38,20 @@ function Home() {
       const queryString = qs.stringify({
         page: page,
         category: category,
-        sortby: sort.sortType,
+        sortby: sort.sortby,
         order: sort.order,
       });
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [category, sort.sortType, sort.order, page]);
+  }, [category, sort.sortby, sort.order, page]);
 
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
       let name;
       sortArray.forEach((el) => {
-        if (el.sortType === params.sortby && el.order === params.order)
+        if (el.sortby === params.sortby && el.order === params.order)
           name = el.name;
       });
       dispatch(setFilters({ ...params, name }));
@@ -63,12 +61,12 @@ function Home() {
 
   useEffect(() => {
     getData();
-  }, [category, sort.sortType, sort.order, page, search]);
+  }, [category, sort.sortby, sort.order, page, search]);
 
   const skeletons = [...new Array(4)].map((_, index) => (
     <PizzaSkeleton key={index} />
   ));
-  const pizzas = items.map((pizza: pizzaItem) => (
+  const pizzas = items.map((pizza: pizzaItemType) => (
     <PizzaBlock key={pizza.id} {...pizza} />
   ));
 

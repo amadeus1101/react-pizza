@@ -1,7 +1,8 @@
+import { sortType } from "./sortType";
+
 export type filtersType = {
-  sortby: string;
-  order: string;
   category: number;
+  sort: sortType;
   page: number;
   search: string;
 };

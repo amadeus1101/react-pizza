@@ -1,16 +1,19 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { DATA_URL } from "../../constants";
+import { filtersType } from "../../@types/filterType";
 
 export const fetchData = createAsyncThunk(
   "pizza/fetchPizzaStatus",
-  async (params) => {
-    const { sortby, order, category, search, page } = params;
+  async (params: filtersType) => {
+    const { sort, category, search, page } = params;
     const { data } = await axios.get(
       DATA_URL +
         `?page=${page}&limit=4${
           category !== 0 ? "&category=" + category : ""
-        }&sortby=${sortby}&order=${order}${search ? "&search=" + search : ""}`
+        }&sortby=${sort.sortby}&order=${sort.order}${
+          search ? "&search=" + search : ""
+        }`
     );
     return data;
   }

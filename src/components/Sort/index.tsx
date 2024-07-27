@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSort } from "../../redux/slices/filterSlice";
 import { sortArray } from "../../constants";
 import { sortType } from "../../@types/sortType";
+import { sortSelector } from "../../redux/selectors/sortSelector";
+import { AppDispatch } from "../../redux/store";
 
 function Sort() {
-  const sort = useSelector((state: any) => state.filter.sort);
-  const dispatch = useDispatch();
+  const sort = useSelector(sortSelector);
+  const dispatch = useDispatch<AppDispatch>();
   const [isSortOpened, setSortOpened] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 

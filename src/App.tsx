@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
+import { setCartData } from "./redux/slices/cartSlice";
+import { RootState, AppDispatch } from "./redux/store";
+import "./scss/app.scss";
+
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
-import { setCartData } from "./redux/slices/cartSlice";
-
-import "./scss/app.scss";
 
 function App() {
   console.log("APP render");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     const localStoreData = localStorage.getItem("react-pizza");
     if (localStoreData) {

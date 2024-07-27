@@ -1,4 +1,4 @@
-export type pizzaItem = {
+export type pizzaItemType = {
   id: number;
   title: string;
   imageUrl: string;

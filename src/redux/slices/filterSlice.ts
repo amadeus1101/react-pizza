@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { sortType } from "../../@types/sortType";
+import { filtersType } from "../../@types/filterType";
 
-const initialState = {
+const initialState: filtersType = {
   category: 0,
-  sort: { name: "популярности 🔽", sortType: "rating", order: "asc" },
+  sort: { name: "популярности 🔽", sortby: "rating", order: "asc" },
   search: "",
   page: 1,
 };
@@ -29,7 +31,7 @@ export const filterSlice = createSlice({
       state.sort = {
         name: action.payload.name,
         order: action.payload.order,
-        sortType: action.payload.sortby,
+        sortby: action.payload.sortby,
       };
     },
   },

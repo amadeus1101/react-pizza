@@ -1,11 +1,12 @@
 import React from "react";
 import { addItem, removeItem, deleteItem } from "../../redux/slices/cartSlice";
 import { useDispatch } from "react-redux";
-import { cartItem } from "../../@types/cartItem";
+import { cartItemType } from "../../@types/cartItemType";
+import { AppDispatch } from "../../redux/store";
 
 const types = ["тонкое", "традиционное"];
 
-const CartItem: React.FC<cartItem> = ({
+const CartItem: React.FC<cartItemType> = ({
   id,
   title,
   imageUrl,
@@ -17,7 +18,7 @@ const CartItem: React.FC<cartItem> = ({
   count,
   hash,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const onClickPlus = () => {
     dispatch(
