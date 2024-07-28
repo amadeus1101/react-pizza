@@ -1,19 +1,13 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setCategory } from "../../redux/slices/filterSlice";
+import { categoriesArray } from "../../constants";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { filterSelector } from "../../redux/filters/selectors";
 
-const categories = [
-  "Все",
-  "Мясные",
-  "Вегетарианские",
-  "Гриль",
-  "Острые",
-  "Закрытые",
-];
+import { setCategory } from "../../redux/filters/slice";
 
-const Categories: React.FC = () => {
-  const categoryId = useSelector((state: any) => state.filter.category);
-  const dispatch = useDispatch();
+const Categories: React.FC = React.memo(() => {
+  const { category } = useAppSelector(filterSelector);
+  const dispatch = useAppDispatch();
 
   const onChangeCategory = (id: number) => {
     dispatch(setCategory(id));
@@ -22,18 +16,18 @@ const Categories: React.FC = () => {
   return (
     <div className="categories">
       <ul>
-        {categories.map((category, index) => (
+        {categoriesArray.map((cat, index) => (
           <li
             key={index}
-            className={categoryId === index ? "active" : ""}
+            className={category === index ? "active" : ""}
             onClick={() => onChangeCategory(index)}
           >
-            {category}
+            {cat}
           </li>
         ))}
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

@@ -1,12 +1,11 @@
-import { sortType } from "./@types/sortType";
+import { SortType } from "./@types/SortType";
 
-const API_URL = "https://63fe15b61626c165a0a7034c.mockapi.io";
-const DATA_URL = "https://63fe15b61626c165a0a7034c.mockapi.io/pizzas";
-const UTILITIES_URL = "https://63fe15b61626c165a0a7034c.mockapi.io/utilities";
+export const API_URL = "https://63fe15b61626c165a0a7034c.mockapi.io";
+export const DATA_URL = "https://63fe15b61626c165a0a7034c.mockapi.io/pizzas";
+export const UTILITIES_URL =
+  "https://63fe15b61626c165a0a7034c.mockapi.io/utilities";
 
-export { API_URL, DATA_URL, UTILITIES_URL };
-
-export const sortArray: sortType[] = [
+export const sortArray: SortType[] = [
   { name: "популярности 🔽", sortby: "rating", order: "asc" },
   { name: "популярности 🔼", sortby: "rating", order: "desc" },
   { name: "цене 🔽", sortby: "price", order: "asc" },
@@ -14,3 +13,14 @@ export const sortArray: sortType[] = [
   { name: "алфавиту 🔽", sortby: "title", order: "asc" },
   { name: "алфавиту 🔼", sortby: "title", order: "desc" },
 ];
+
+export const categoriesArray = [
+  "Все",
+  "Мясные",
+  "Вегетарианские",
+  "Гриль",
+  "Острые",
+  "Закрытые",
+];
+
+export const Itemtypes = ["тонкое", "традиционное"];

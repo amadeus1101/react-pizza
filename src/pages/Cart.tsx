@@ -1,19 +1,20 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../hooks";
+import { CartItemType } from "../@types/CartItemType";
+//redux
+import { cartSelector } from "../redux/cart/selectors";
+import { clearCart } from "../redux/cart/slice";
+//components
 import CartItem from "../components/CartItem";
 import CartEmpty from "../components/CartEmpty";
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../redux/slices/cartSlice";
-import { Link } from "react-router-dom";
-import { cartItemType } from "../@types/cartItemType";
-import { cartSelector } from "../redux/selectors/cartSelector";
 
 const Cart: React.FC = () => {
-  console.log("**cart render");
+  console.log("*--CART");
   const { cart, totalCount, totalPrice } = useSelector(cartSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClickClear = () => {
-    //@ts-ignore
     dispatch(clearCart());
   };
   return (
@@ -91,12 +92,11 @@ const Cart: React.FC = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
-
                 <span>Очистить корзину</span>
               </div>
             </div>
             <div className="cart__items">
-              {cart.map((item: cartItemType) => (
+              {cart.map((item: CartItemType) => (
                 <CartItem key={item.hash} {...item} />
               ))}
             </div>

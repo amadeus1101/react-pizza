@@ -1,12 +1,10 @@
-import React from "react";
-import { addItem, removeItem, deleteItem } from "../../redux/slices/cartSlice";
-import { useDispatch } from "react-redux";
-import { cartItemType } from "../../@types/cartItemType";
-import { AppDispatch } from "../../redux/store";
+import { Itemtypes } from "../../constants";
+import { useAppDispatch } from "../../hooks";
+import { CartItemType } from "../../@types/CartItemType";
 
-const types = ["тонкое", "традиционное"];
+import { addItem, deleteItem, removeItem } from "../../redux/cart/slice";
 
-const CartItem: React.FC<cartItemType> = ({
+const CartItem: React.FC<CartItemType> = ({
   id,
   title,
   imageUrl,
@@ -18,7 +16,7 @@ const CartItem: React.FC<cartItemType> = ({
   count,
   hash,
 }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const onClickPlus = () => {
     dispatch(
@@ -42,6 +40,7 @@ const CartItem: React.FC<cartItemType> = ({
   const onClickDelete = () => {
     dispatch(deleteItem(hash));
   };
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -49,7 +48,7 @@ const CartItem: React.FC<cartItemType> = ({
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p>{`${types[type]} тесто, ${size} см.`}</p>
+        <p>{`${Itemtypes[type]} тесто, ${size} см.`}</p>
       </div>
       <div className="cart__item-count">
         <div

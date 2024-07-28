@@ -1,28 +1,30 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPage } from "../../redux/slices/filterSlice";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { filterSelector } from "../../redux/filters/selectors";
 
-let pages = [1, 2, 3];
+import { setPage } from "../../redux/filters/slice";
+
+let PAGES = [1, 2, 3];
 const MAXPAGE = 3;
 
-const Pagination: React.FC = () => {
-  const activePage = useSelector((state: any) => state.filter.page);
-  const dispatch = useDispatch();
+const Pagination: React.FC = React.memo(() => {
+  const { page } = useAppSelector(filterSelector);
+  const dispatch = useAppDispatch();
 
   const stepBack = () => {
-    if (activePage > 1) {
-      if (activePage === pages[0]) {
-        pages = pages.map((page) => page - 1);
+    if (page > 1) {
+      if (page === PAGES[0]) {
+        PAGES = PAGES.map((page) => page - 1);
       }
-      dispatch(setPage(activePage - 1));
+      dispatch(setPage(page - 1));
     }
   };
   const stepForward = () => {
-    if (activePage < MAXPAGE) {
-      if (activePage === pages[2]) {
-        pages = pages.map((page) => page + 1);
+    if (page < MAXPAGE) {
+      if (page === PAGES[2]) {
+        PAGES = PAGES.map((el) => el + 1);
       }
-      dispatch(setPage(activePage + 1));
+      dispatch(setPage(page + 1));
     }
   };
   const onClickPage = (pg: number) => {
@@ -33,19 +35,19 @@ const Pagination: React.FC = () => {
     <div className="pagination">
       <ul>
         <li onClick={() => stepBack()}>◀</li>
-        {pages.map((page) => (
+        {PAGES.map((el) => (
           <li
-            key={page}
-            className={page === activePage ? "active" : ""}
-            onClick={() => onClickPage(page)}
+            key={el}
+            className={el === page ? "active" : ""}
+            onClick={() => onClickPage(el)}
           >
-            {page}
+            {el}
           </li>
         ))}
         <li onClick={() => stepForward()}>▶</li>
       </ul>
     </div>
   );
-};
+});
 
 export default Pagination;

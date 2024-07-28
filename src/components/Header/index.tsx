@@ -1,12 +1,19 @@
-import { Link, useLocation, useParams } from "react-router-dom";
-import Input from "../Input";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useAppSelector } from "../../hooks";
+import { Link, useLocation } from "react-router-dom";
 
-const Header = () => {
-  const { totalCount, totalPrice } = useSelector(
-    (state: any) => state.cartParams
-  );
+import { cartSelector } from "../../redux/cart/selectors";
+
+import Input from "../Input";
+
+const Header: React.FC = () => {
+  const { cart, totalCount, totalPrice } = useAppSelector(cartSelector);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    const data = JSON.stringify(cart);
+    localStorage.setItem("react-pizza-cart", data);
+  }, [cart]);
   return (
     <div className="header">
       <div className="container">
@@ -64,5 +71,4 @@ const Header = () => {
     </div>
   );
 };
-
 export default Header;

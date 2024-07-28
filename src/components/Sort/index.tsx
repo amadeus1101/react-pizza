@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setSort } from "../../redux/slices/filterSlice";
 import { sortArray } from "../../constants";
-import { sortType } from "../../@types/sortType";
-import { sortSelector } from "../../redux/selectors/sortSelector";
-import { AppDispatch } from "../../redux/store";
+import { SortType } from "../../@types/SortType";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
-function Sort() {
-  const sort = useSelector(sortSelector);
-  const dispatch = useDispatch<AppDispatch>();
+import { sortSelector } from "../../redux/filters/selectors";
+import { setSort } from "../../redux/filters/slice";
+
+const Sort: React.FC = React.memo(() => {
+  const sort = useAppSelector(sortSelector);
+  const dispatch = useAppDispatch();
   const [isSortOpened, setSortOpened] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -29,7 +29,7 @@ function Sort() {
     };
   });
 
-  const onChangeSort = (obj: sortType) => {
+  const onChangeSort = (obj: SortType) => {
     if (obj.name !== sort.name) {
       setSortOpened(false);
       dispatch(setSort(obj));
@@ -59,6 +59,6 @@ function Sort() {
       )}
     </div>
   );
-}
+});
 
 export default Sort;

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSearch } from "../../redux/slices/filterSlice";
+import { useAppDispatch } from "../../hooks";
 
-const Input: React.FC = () => {
+import { setSearch } from "../../redux/filters/slice";
+
+const Input: React.FC = React.memo(() => {
   const [searchValue, setSearchValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const onChangeInput = (query: string) => {
     setSearchValue(query);
   };
@@ -38,6 +39,6 @@ const Input: React.FC = () => {
       )}
     </div>
   );
-};
+});
 
 export default Input;

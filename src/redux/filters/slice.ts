@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { sortType } from "../../@types/sortType";
-import { filtersType } from "../../@types/filterType";
+import { SortType } from "../../@types/SortType";
+import { FiltersType } from "./types";
 
-const initialState: filtersType = {
+const initialState: FiltersType = {
   category: 0,
   sort: { name: "популярности 🔽", sortby: "rating", order: "asc" },
   search: "",
@@ -16,7 +16,7 @@ export const filterSlice = createSlice({
     setCategory(state, action: PayloadAction<number>) {
       state.category = action.payload;
     },
-    setSort(state, action: PayloadAction<sortType>) {
+    setSort(state, action: PayloadAction<SortType>) {
       state.sort = action.payload;
     },
     setSearch(state, action: PayloadAction<string>) {

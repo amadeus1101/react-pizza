@@ -1,5 +1,5 @@
 import React from "react";
-import { NotificationType } from "../@types/notificationType";
+import { NotificationType } from "../@types/NotificationType";
 
 const Notification: React.FC<NotificationType> = ({
   headline,
