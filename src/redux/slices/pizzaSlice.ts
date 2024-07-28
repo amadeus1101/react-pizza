@@ -1,13 +1,20 @@
 import axios from "axios";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { DATA_URL } from "../../constants";
 import { filtersType } from "../../@types/filterType";
+import { pizzaItemType } from "../../@types/pizzaItemType";
 
-export const fetchData = createAsyncThunk(
+export enum FetchStatus {
+  LOADING = "loading",
+  SUCCESS = "success",
+  ERROR = "error",
+}
+
+export const fetchData = createAsyncThunk<pizzaItemType[], filtersType>(
   "pizza/fetchPizzaStatus",
-  async (params: filtersType) => {
+  async (params) => {
     const { sort, category, search, page } = params;
-    const { data } = await axios.get(
+    const { data } = await axios.get<pizzaItemType[]>(
       DATA_URL +
         `?page=${page}&limit=4${
           category !== 0 ? "&category=" + category : ""
@@ -19,16 +26,21 @@ export const fetchData = createAsyncThunk(
   }
 );
 
-const initialState = {
+interface IPizzaSlice {
+  items: pizzaItemType[];
+  status: FetchStatus;
+}
+
+const initialState: IPizzaSlice = {
   items: [],
-  status: "loading",
+  status: FetchStatus.LOADING,
 };
 
 export const pizzaSlice = createSlice({
   name: "pizza",
   initialState,
   reducers: {
-    setItems(state, action) {
+    setItems(state, action: PayloadAction<pizzaItemType[]>) {
       state.items = action.payload;
     },
   },
@@ -36,15 +48,18 @@ export const pizzaSlice = createSlice({
     builder
       .addCase(fetchData.pending, (state) => {
         state.items = [];
-        state.status = "loading";
+        state.status = FetchStatus.LOADING;
       })
-      .addCase(fetchData.fulfilled, (state, action) => {
-        state.items = action.payload;
-        state.status = "success";
-      })
+      .addCase(
+        fetchData.fulfilled,
+        (state, action: PayloadAction<pizzaItemType[]>) => {
+          state.items = action.payload;
+          state.status = FetchStatus.SUCCESS;
+        }
+      )
       .addCase(fetchData.rejected, (state) => {
         state.items = [];
-        state.status = "error";
+        state.status = FetchStatus.ERROR;
       });
   },
 });

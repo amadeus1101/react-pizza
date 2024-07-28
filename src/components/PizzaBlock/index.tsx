@@ -20,7 +20,18 @@ const PizzaBlock: React.FC<pizzaItemType> = ({
 
   const onClickAdd = () => {
     dispatch(
-      addItem({ id, title, imageUrl, price, size, type, category, rating })
+      addItem({
+        id,
+        title,
+        imageUrl,
+        price,
+        size,
+        type,
+        category,
+        rating,
+        count: 0,
+        hash: "",
+      })
     );
   };
 

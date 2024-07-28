@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import qs from "qs";
 import { useDispatch, useSelector } from "react-redux";
 import { DATA_URL, sortArray } from "../constants";
@@ -15,20 +15,20 @@ import Notification from "../components/Notification";
 import { pizzaItemType } from "../@types/pizzaItemType";
 import { filterSelector } from "../redux/selectors/filterSelector";
 import { pizzaSelector } from "../redux/selectors/pizzaSelector";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 function Home() {
   console.log("**Home render");
   //redux
-  const { category, sort, search, page } = useSelector(filterSelector);
-  const { items, status } = useSelector(pizzaSelector);
+  const { category, sort, search, page } = useAppSelector(filterSelector);
+  const { items, status } = useAppSelector(pizzaSelector);
   //query url params
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
   const getData = () => {
-    //@ts-ignore
     dispatch(fetchData({ sort, category, search, page }));
     window.scrollTo(0, 0);
   };
@@ -44,7 +44,7 @@ function Home() {
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [category, sort.sortby, sort.order, page]);
+  }, [category, sort.sortby, sort.order, page, search]);
 
   useEffect(() => {
     if (window.location.search) {
