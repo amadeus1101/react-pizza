@@ -1,6 +1,6 @@
 import { CartItemType } from "../../@types/CartItemType";
 
-export type CartSlice = {
+export type CartSliceType = {
   cart: CartItemType[];
   totalCount: number;
   totalPrice: number;
