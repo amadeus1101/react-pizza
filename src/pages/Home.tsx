@@ -69,22 +69,22 @@ function Home() {
     window.scrollTo(0, 0);
   }, [category, sortby, order, page, search]);
 
-  const getProductCount = (id: number) => {
-    console.log(id);
-    const idx = cart.findIndex((elem) => elem.id === id);
-    if (idx > -1)
-      return cart.reduce((acc, elem) => {
-        if (elem.id === idx) return acc + elem.count;
-        return acc;
-      }, 0);
-    return 0;
+  const getProductCount = (title: string) => {
+    let counter = 0;
+    for (let i = 0; i < cart.length; i++)
+      if (cart[i].title === title) counter += cart[i].count;
+    return counter;
   };
 
   const skeletons = [...new Array(4)].map((_, index) => (
     <PizzaSkeleton key={index} />
   ));
   const pizzas = items.map((pizza: ProductType) => (
-    <PizzaBlock key={pizza.id} {...pizza} count={0} />
+    <PizzaBlock
+      key={pizza.id}
+      {...pizza}
+      count={getProductCount(pizza.title)}
+    />
   ));
 
   return (
