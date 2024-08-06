@@ -7,13 +7,9 @@ import { cartSelector } from "../../redux/cart/selectors";
 import Input from "../Input";
 
 const Header: React.FC = () => {
-  const { cart, totalCount, totalPrice } = useAppSelector(cartSelector);
+  const { totalCount, totalPrice } = useAppSelector(cartSelector);
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    const data = JSON.stringify(cart);
-    localStorage.setItem("react-pizza-cart", data);
-  }, [cart]);
   return (
     <div className="header">
       <div className="container">

@@ -16,6 +16,8 @@ import Categories from "../components/Categories";
 import PizzaBlock from "../components/PizzaBlock";
 import Notification from "../components/Notification";
 import PizzaSkeleton from "../components/PizzaBlock/skeleton";
+import { cartSelector } from "../redux/cart/selectors";
+import { updateStorage } from "../utils/updateStorage";
 
 function Home() {
   console.log("*--Home");
@@ -23,11 +25,16 @@ function Home() {
   const { category, search, page } = useAppSelector(filterSelector);
   const { name, sortby, order } = useAppSelector(sortSelector);
   const { items, status } = useAppSelector(productSelector);
+  const { cart, totalCount, totalPrice } = useAppSelector(cartSelector);
   //query url params
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (isMounted.current) updateStorage({ cart, totalCount, totalPrice });
+  }, [totalCount]);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -62,11 +69,22 @@ function Home() {
     window.scrollTo(0, 0);
   }, [category, sortby, order, page, search]);
 
+  const getProductCount = (id: number) => {
+    console.log(id);
+    const idx = cart.findIndex((elem) => elem.id === id);
+    if (idx > -1)
+      return cart.reduce((acc, elem) => {
+        if (elem.id === idx) return acc + elem.count;
+        return acc;
+      }, 0);
+    return 0;
+  };
+
   const skeletons = [...new Array(4)].map((_, index) => (
     <PizzaSkeleton key={index} />
   ));
   const pizzas = items.map((pizza: ProductType) => (
-    <PizzaBlock key={pizza.id} {...pizza} />
+    <PizzaBlock key={pizza.id} {...pizza} count={0} />
   ));
 
   return (

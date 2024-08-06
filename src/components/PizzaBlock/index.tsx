@@ -1,38 +1,42 @@
 import { useState } from "react";
 import { useAppDispatch } from "../../hooks";
-import { ProductType } from "../../@types/ProductType";
-
 import { addItem } from "../../redux/cart/slice";
+import { ProductType } from "../../@types/ProductType";
+import { CartItemType } from "../../@types/CartItemType";
 
-const PizzaBlock: React.FC<ProductType> = ({
+const typesArray = ["Тонкое", "Традиционное"];
+
+const PizzaBlock: React.FC<ProductType & { count: number }> = ({
   id,
   title,
   imageUrl,
-  types,
-  sizes,
-  price,
   category,
   rating,
+  price,
+  sizes,
+  types,
+  count,
 }) => {
   const [type, setType] = useState(types[0]);
   const [size, setSize] = useState(sizes[0]);
+  const [cartCount, setCartCount] = useState(count);
   const dispatch = useAppDispatch();
 
   const onClickAdd = () => {
-    dispatch(
-      addItem({
-        id,
-        title,
-        imageUrl,
-        price,
-        size,
-        type,
-        category,
-        rating,
-        count: 0,
-        hash: "",
-      })
-    );
+    const obj: CartItemType = {
+      id: id,
+      title: title,
+      imageUrl: imageUrl,
+      type: type,
+      size: size,
+      price: price,
+      category: category,
+      rating: rating,
+      count: 1,
+      hash: title + type + size,
+    };
+    dispatch(addItem(obj));
+    setCartCount((prev) => prev + 1);
   };
 
   return (
@@ -41,13 +45,13 @@ const PizzaBlock: React.FC<ProductType> = ({
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {types.map((t) => (
+          {types.map((elem) => (
             <li
-              key={t}
-              className={t === type ? "active" : ""}
-              onClick={() => setType(t)}
+              key={elem}
+              className={elem === type ? "active" : ""}
+              onClick={() => setType(elem)}
             >
-              {t ? "Традиционное" : "Тонкое"}
+              {typesArray[elem]}
             </li>
           ))}
         </ul>
@@ -82,7 +86,7 @@ const PizzaBlock: React.FC<ProductType> = ({
             />
           </svg>
           <span>Добавить</span>
-          <i>{"0"}</i>
+          <i>{cartCount}</i>
         </div>
       </div>
     </div>

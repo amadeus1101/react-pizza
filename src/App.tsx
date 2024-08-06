@@ -6,8 +6,7 @@ import "./scss/app.scss";
 
 import Home from "./pages/Home";
 import Header from "./components/Header";
-import Cart from "./pages/Cart";
-//const Cart = React.lazy(() => import("./pages/Cart"));
+const Cart = React.lazy(() => import("./pages/Cart"));
 
 function App() {
   console.log("*APP");
@@ -16,7 +15,9 @@ function App() {
     const localStoreData = localStorage.getItem("react-pizza-cart");
     if (localStoreData) {
       const cartData = JSON.parse(localStoreData);
-      if (cartData) dispatch(setCartData(cartData));
+      if (cartData) {
+        dispatch(setCartData(cartData));
+      }
     }
   }, []);
   return (

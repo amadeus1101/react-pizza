@@ -2,7 +2,7 @@ import { Itemtypes } from "../../constants";
 import { useAppDispatch } from "../../hooks";
 import { CartItemType } from "../../@types/CartItemType";
 
-import { addItem, deleteItem, removeItem } from "../../redux/cart/slice";
+import { addItem, minusItem, popItem } from "../../redux/cart/slice";
 
 const CartItem: React.FC<CartItemType> = ({
   id,
@@ -29,16 +29,16 @@ const CartItem: React.FC<CartItemType> = ({
         price,
         category,
         rating,
-        hash,
         count,
+        hash,
       })
     );
   };
   const onClickMinus = () => {
-    dispatch(removeItem(hash));
+    dispatch(minusItem(hash));
   };
   const onClickDelete = () => {
-    dispatch(deleteItem(hash));
+    dispatch(popItem(hash));
   };
 
   return (
