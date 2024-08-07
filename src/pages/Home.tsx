@@ -1,11 +1,15 @@
 import qs from "qs";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { QueryType } from "../@types/QueryType";
 import { ProductType } from "../@types/ProductType";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import { updateStorage } from "../utils/updateStorage";
 import { sortArray } from "../constants";
 //redux
 import { setFilters } from "../redux/filters/slice";
+import { FetchStatus } from "../redux/product/types";
+import { cartSelector } from "../redux/cart/selectors";
 import { fetchData } from "../redux/product/asyncActions";
 import { filterSelector, sortSelector } from "../redux/filters/selectors";
 import { productSelector } from "../redux/product/selectors";
@@ -16,10 +20,6 @@ import Categories from "../components/Categories";
 import PizzaBlock from "../components/PizzaBlock";
 import Notification from "../components/Notification";
 import PizzaSkeleton from "../components/PizzaBlock/skeleton";
-import { cartSelector } from "../redux/cart/selectors";
-import { updateStorage } from "../utils/updateStorage";
-import { FiltersType } from "../@types/FiltersType";
-import { QueryType } from "../@types/QueryType";
 
 function Home() {
   console.log("*--Home");
@@ -107,9 +107,9 @@ function Home() {
           <>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-              {status === "success" ? pizzas : skeletons}
+              {status === FetchStatus.SUCCESS ? pizzas : skeletons}
             </div>
-            <Pagination />
+            {status === FetchStatus.SUCCESS && <Pagination />}
           </>
         )}
       </div>
