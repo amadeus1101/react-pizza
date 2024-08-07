@@ -6,12 +6,12 @@ export const UTILITIES_URL =
   "https://63fe15b61626c165a0a7034c.mockapi.io/utilities";
 
 export const sortArray: SortType[] = [
-  { name: "популярности 🔽", sortby: "rating", order: "asc" },
-  { name: "популярности 🔼", sortby: "rating", order: "desc" },
-  { name: "цене 🔽", sortby: "price", order: "asc" },
-  { name: "цене 🔼", sortby: "price", order: "desc" },
-  { name: "алфавиту 🔽", sortby: "title", order: "asc" },
-  { name: "алфавиту 🔼", sortby: "title", order: "desc" },
+  { name: "популярности 🔽", sortby: "+rating" },
+  { name: "популярности 🔼", sortby: "-rating" },
+  { name: "цене 🔽", sortby: "+price" },
+  { name: "цене 🔼", sortby: "-price" },
+  { name: "алфавиту 🔽", sortby: "+title" },
+  { name: "алфавиту 🔼", sortby: "-title" },
 ];
 
 export const categoriesArray = [

@@ -18,12 +18,14 @@ import Notification from "../components/Notification";
 import PizzaSkeleton from "../components/PizzaBlock/skeleton";
 import { cartSelector } from "../redux/cart/selectors";
 import { updateStorage } from "../utils/updateStorage";
+import { FiltersType } from "../@types/FiltersType";
+import { QueryType } from "../@types/QueryType";
 
 function Home() {
   console.log("*--Home");
   //redux
   const { category, search, page } = useAppSelector(filterSelector);
-  const { name, sortby, order } = useAppSelector(sortSelector);
+  const { name, sortby } = useAppSelector(sortSelector);
   const { items, status } = useAppSelector(productSelector);
   const { cart, totalCount, totalPrice } = useAppSelector(cartSelector);
   //query url params
@@ -39,35 +41,36 @@ function Home() {
   useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
-        page,
         category,
-        sortby,
-        order,
+        sortby: sortby.substring(1),
+        order: sortby[0] === "-" ? "desc" : "asc",
+        page,
       });
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [category, sortby, order, page, search]);
+  }, [category, sortby, page]);
 
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      let name;
-      sortArray.forEach((el) => {
-        if (el.sortby === params.sortby && el.order === params.order)
-          name = el.name;
-      });
-      dispatch(setFilters({ ...params, name }));
+      const tmp =
+        params.order === "asc" ? "+" + params.sortby : "-" + params.sortby;
+      const obj: QueryType = {
+        category: Number(params.category),
+        sortby: tmp,
+        name: String(sortArray.find((elem) => elem.sortby === tmp)?.name),
+        page: Number(params.page),
+      };
+      dispatch(setFilters(obj));
       isSearch.current = true;
     }
   }, []);
 
   useEffect(() => {
-    dispatch(
-      fetchData({ sort: { name, sortby, order }, category, search, page })
-    );
+    dispatch(fetchData({ sort: { name, sortby }, category, search, page }));
     window.scrollTo(0, 0);
-  }, [category, sortby, order, page, search]);
+  }, [category, sortby, page, search]);
 
   const getProductCount = (title: string) => {
     let counter = 0;

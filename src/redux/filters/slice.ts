@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SortType } from "../../@types/SortType";
-import { FiltersType } from "./types";
+import { FiltersType } from "../../@types/FiltersType";
+import { QueryType } from "../../@types/QueryType";
 
 const initialState: FiltersType = {
   category: 0,
-  sort: { name: "популярности 🔽", sortby: "rating", order: "asc" },
+  sort: { name: "популярности 🔽", sortby: "rating" },
   search: "",
   page: 1,
 };
@@ -25,13 +26,11 @@ export const filterSlice = createSlice({
     setPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
-    /*TODO: MAKE CORRECT ACTION TYPE*/
-    setFilters(state, action) {
-      state.category = Number(action.payload.category);
-      state.page = Number(action.payload.page);
+    setFilters(state, action: PayloadAction<QueryType>) {
+      state.category = action.payload.category;
+      state.page = action.payload.page;
       state.sort = {
         name: action.payload.name,
-        order: action.payload.order,
         sortby: action.payload.sortby,
       };
     },

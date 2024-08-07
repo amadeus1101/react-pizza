@@ -1,4 +1,4 @@
-import { SortType } from "../../@types/SortType";
+import { SortType } from "./SortType";
 
 export type FiltersType = {
   category: number;
