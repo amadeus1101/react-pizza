@@ -6,6 +6,7 @@ import "./scss/app.scss";
 
 import Home from "./pages/Home";
 import Header from "./components/Header";
+import NotFound from "./pages/NotFound";
 const Cart = React.lazy(() => import("./pages/Cart"));
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             </Suspense>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

@@ -2,10 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SortType } from "../../@types/SortType";
 import { FiltersType } from "../../@types/FiltersType";
 import { QueryType } from "../../@types/QueryType";
+import { sortArray } from "../../constants";
 
 const initialState: FiltersType = {
   category: 0,
-  sort: { name: "популярности 🔽", sortby: "rating" },
+  sort: sortArray[0],
   search: "",
   page: 1,
 };

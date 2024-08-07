@@ -97,7 +97,7 @@ function Home() {
           <Categories />
           <Sort />
         </div>
-        {status === "error" ? (
+        {status === FetchStatus.ERROR ? (
           <Notification
             headline={"Произошла ошибка "}
             paragraph1={"К сожалению, не удалось получить питсы."}
