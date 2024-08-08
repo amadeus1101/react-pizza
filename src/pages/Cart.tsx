@@ -9,7 +9,7 @@ import { clearCart } from "../redux/cart/slice";
 import CartItem from "../components/CartItem";
 import CartEmpty from "../components/CartEmpty";
 import { useEffect } from "react";
-import { updateStorage } from "../utils/updateStorage";
+import { updateCart } from "../utils/updateCart";
 
 const Cart: React.FC = () => {
   console.log("*--CART");
@@ -17,7 +17,7 @@ const Cart: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    updateStorage({ cart, totalCount, totalPrice });
+    updateCart({ cart, totalCount, totalPrice });
   }, [totalCount]);
 
   const onClickClear = () => {

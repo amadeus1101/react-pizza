@@ -1,18 +1,19 @@
-import qs from "qs";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { QueryType } from "../@types/QueryType";
 import { ProductType } from "../@types/ProductType";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { updateStorage } from "../utils/updateStorage";
-import { sortArray } from "../constants";
+import { updateCart } from "../utils/updateCart";
+import { getCart } from "../utils/getCart";
+import { getQuery } from "../utils/getQuery";
+import { parseQuery } from "../utils/parseQuery";
 //redux
+import { setCartData } from "../redux/cart/slice";
 import { setFilters } from "../redux/filters/slice";
 import { FetchStatus } from "../redux/product/types";
 import { cartSelector } from "../redux/cart/selectors";
 import { fetchData } from "../redux/product/asyncActions";
-import { filterSelector, sortSelector } from "../redux/filters/selectors";
 import { productSelector } from "../redux/product/selectors";
+import { filterSelector, sortSelector } from "../redux/filters/selectors";
 //components
 import Sort from "../components/Sort";
 import Pagination from "../components/Pagination";
@@ -31,43 +32,35 @@ function Home() {
   //query url params
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isSearch = useRef(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
-    if (isMounted.current) updateStorage({ cart, totalCount, totalPrice });
+    if (isMounted.current) {
+      console.log("useEffect #1 -- if");
+      updateCart({ cart, totalCount, totalPrice });
+    } else {
+      console.log("useEffect #1 -- else");
+      dispatch(setCartData(getCart("react-pizza-cart")));
+    }
   }, [totalCount]);
 
   useEffect(() => {
     if (isMounted.current) {
-      const queryString = qs.stringify({
-        category,
-        sortby: sortby.substring(1),
-        order: sortby[0] === "-" ? "desc" : "asc",
-        page,
-      });
-      navigate(`?${queryString}`);
+      console.log("useEffect #2");
+      navigate(getQuery(category, sortby, page));
     }
     isMounted.current = true;
   }, [category, sortby, page]);
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const tmp =
-        params.order === "asc" ? "+" + params.sortby : "-" + params.sortby;
-      const obj: QueryType = {
-        category: Number(params.category),
-        sortby: tmp,
-        name: String(sortArray.find((elem) => elem.sortby === tmp)?.name),
-        page: Number(params.page),
-      };
-      dispatch(setFilters(obj));
-      isSearch.current = true;
+      console.log("useEffect #3");
+      dispatch(setFilters(parseQuery(window.location.search)));
     }
   }, []);
 
   useEffect(() => {
+    console.log("useEffect #4");
     dispatch(fetchData({ sort: { name, sortby }, category, search, page }));
     window.scrollTo(0, 0);
   }, [category, sortby, page, search]);
