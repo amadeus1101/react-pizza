@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CartItemType } from "../../@types/CartItemType";
-import { StorageType } from "../../@types/StorageType";
+import { cartItemType } from "../../@types/cartItemType";
+import { storageType } from "../../@types/storageType";
 
-const initialState: StorageType = {
+const initialState: storageType = {
   cart: [],
   totalCount: 0,
   totalPrice: 0,
@@ -12,12 +12,12 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    setCartData(state, action: PayloadAction<StorageType>) {
+    setCartData(state, action: PayloadAction<storageType>) {
       state.cart = action.payload.cart;
       state.totalCount = action.payload.totalCount;
       state.totalPrice = action.payload.totalPrice;
     },
-    addItem(state, action: PayloadAction<CartItemType>) {
+    addItem(state, action: PayloadAction<cartItemType>) {
       const obj = action.payload;
       const index = state.cart.findIndex((elem) => elem.hash === obj.hash);
       state.totalCount++;

@@ -1,4 +1,4 @@
-export type SortType = {
+export type sortType = {
   name: string;
   sortby: string;
 };

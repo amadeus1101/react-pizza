@@ -1,8 +1,8 @@
-import { SortType } from "./SortType";
+import { sortType } from "./sortType";
 
-export type FiltersType = {
+export type filtersType = {
   category: number;
-  sort: SortType;
+  sort: sortType;
   page: number;
   search: string;
 };

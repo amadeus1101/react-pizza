@@ -1,4 +1,4 @@
-import { ProductType } from "../../@types/ProductType";
+import { productType } from "../../@types/productType";
 
 export enum FetchStatus {
   LOADING = "loading",
@@ -7,6 +7,6 @@ export enum FetchStatus {
 }
 
 export type ProductSlice = {
-  items: ProductType[];
+  items: productType[];
   status: FetchStatus;
 };

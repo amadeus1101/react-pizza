@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useAppDispatch } from "../../redux/store";
 import { addItem } from "../../redux/cart/slice";
-import { ProductType } from "../../@types/ProductType";
-import { CartItemType } from "../../@types/CartItemType";
+import { productType } from "../../@types/productType";
+import { cartItemType } from "../../@types/cartItemType";
 
 const typesArray = ["Тонкое", "Традиционное"];
 
-const PizzaBlock: React.FC<ProductType & { count: number }> = ({
+const PizzaBlock: React.FC<productType & { count: number }> = ({
   id,
   title,
   imageUrl,
@@ -23,7 +23,7 @@ const PizzaBlock: React.FC<ProductType & { count: number }> = ({
   const dispatch = useAppDispatch();
 
   const onClickAdd = () => {
-    const obj: CartItemType = {
+    const obj: cartItemType = {
       id: id,
       title: title,
       imageUrl: imageUrl,

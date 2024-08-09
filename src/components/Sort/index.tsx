@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { sortArray } from "../../constants";
-import { SortType } from "../../@types/SortType";
+import { sortType } from "../../@types/sortType";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 import { sortSelector } from "../../redux/filters/selectors";
@@ -29,7 +29,7 @@ const Sort: React.FC = React.memo(() => {
     };
   });
 
-  const onChangeSort = (obj: SortType) => {
+  const onChangeSort = (obj: sortType) => {
     if (obj.name !== sort.name) {
       setSortOpened(false);
       dispatch(setSort(obj));

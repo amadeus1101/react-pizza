@@ -1,4 +1,4 @@
-export type QueryType = {
+export type queryType = {
   category: number;
   page: number;
   sortby: string;

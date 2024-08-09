@@ -1,7 +1,7 @@
-import { CartItemType } from "./CartItemType";
+import { cartItemType } from "./cartItemType";
 
-export type StorageType = {
-  cart: CartItemType[];
+export type storageType = {
+  cart: cartItemType[];
   totalCount: number;
   totalPrice: number;
 };

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FetchStatus, ProductSlice } from "./types";
-import { ProductType } from "../../@types/ProductType";
+import { productType } from "../../@types/productType";
 import { fetchData } from "./asyncActions";
 
 const initialState: ProductSlice = {
@@ -12,7 +12,7 @@ export const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setItems(state, action: PayloadAction<ProductType[]>) {
+    setItems(state, action: PayloadAction<productType[]>) {
       state.items = action.payload;
     },
   },
@@ -24,7 +24,7 @@ export const productSlice = createSlice({
       })
       .addCase(
         fetchData.fulfilled,
-        (state, action: PayloadAction<ProductType[]>) => {
+        (state, action: PayloadAction<productType[]>) => {
           state.items = action.payload;
           state.status = FetchStatus.SUCCESS;
         }

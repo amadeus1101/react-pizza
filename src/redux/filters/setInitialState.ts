@@ -1,4 +1,4 @@
-import { FiltersType } from "../../@types/FiltersType";
+import { filtersType } from "../../@types/filtersType";
 import { sortArray } from "../../constants";
 import { parseQuery } from "../../utils";
 
@@ -6,7 +6,7 @@ export function setInitialState() {
   const obj = parseQuery(window.location.search);
   if (obj) {
     const sort = sortArray.find((elem) => elem.sortby === obj.sortby);
-    const initialState: FiltersType = {
+    const initialState: filtersType = {
       category: obj.category,
       sort: sort ?? sortArray[0],
       page: obj.page,
@@ -14,7 +14,7 @@ export function setInitialState() {
     };
     return initialState;
   }
-  const initialState: FiltersType = {
+  const initialState: filtersType = {
     category: 0,
     sort: sortArray[0],
     page: 1,
