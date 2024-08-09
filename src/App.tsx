@@ -8,7 +8,6 @@ import NotFound from "./pages/NotFound";
 const Cart = React.lazy(() => import("./pages/Cart"));
 
 function App() {
-  console.log("*APP");
   return (
     <div className="wrapper">
       <Header />

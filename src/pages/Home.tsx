@@ -18,7 +18,6 @@ import Notification from "../components/Notification";
 import PizzaSkeleton from "../components/PizzaBlock/skeleton";
 
 function Home() {
-  console.log("*--Home");
   //redux
   const { category, search, page } = useAppSelector(filterSelector);
   const { name, sortby } = useAppSelector(sortSelector);

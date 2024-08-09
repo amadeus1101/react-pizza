@@ -1,18 +1,16 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../redux/store";
-import { CartItemType } from "../@types/CartItemType";
+import { updateCart } from "../utils/index";
 //redux
-import { cartSelector } from "../redux/cart/selectors";
+import { useAppDispatch } from "../redux/store";
 import { clearCart } from "../redux/cart/slice";
+import { cartSelector } from "../redux/cart/selectors";
 //components
 import CartItem from "../components/CartItem";
 import CartEmpty from "../components/CartEmpty";
-import { useEffect } from "react";
-import { updateCart } from "../utils/updateCart";
 
 const Cart: React.FC = () => {
-  console.log("*--CART");
   const { cart, totalCount, totalPrice } = useSelector(cartSelector);
   const dispatch = useAppDispatch();
 
@@ -102,7 +100,7 @@ const Cart: React.FC = () => {
               </div>
             </div>
             <div className="cart__items">
-              {cart.map((item: CartItemType) => (
+              {cart.map((item) => (
                 <CartItem key={item.hash} {...item} />
               ))}
             </div>

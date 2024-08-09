@@ -1,7 +1,7 @@
 import { Itemtypes } from "../../constants";
-import { useAppDispatch } from "../../redux/store";
 import { CartItemType } from "../../@types/CartItemType";
 
+import { useAppDispatch } from "../../redux/store";
 import { addItem, minusItem, popItem } from "../../redux/cart/slice";
 
 const CartItem: React.FC<CartItemType> = ({

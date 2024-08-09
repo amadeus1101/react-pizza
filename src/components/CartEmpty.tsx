@@ -1,6 +1,6 @@
 import React from "react";
-import Notification from "./Notification";
 import { Link } from "react-router-dom";
+import Notification from "./Notification";
 
 const CartEmpty: React.FC = () => {
   return (
