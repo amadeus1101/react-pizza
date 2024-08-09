@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../redux/store";
 import { addItem } from "../../redux/cart/slice";
 import { ProductType } from "../../@types/ProductType";
 import { CartItemType } from "../../@types/CartItemType";

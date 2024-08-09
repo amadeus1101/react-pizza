@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { filterSelector } from "../../redux/filters/selectors";
 
 import { setPage } from "../../redux/filters/slice";

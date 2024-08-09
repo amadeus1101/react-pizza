@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../redux/store";
 
 import { setSearch } from "../../redux/filters/slice";
 

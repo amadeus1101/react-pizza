@@ -1,6 +1,6 @@
 import React from "react";
 import { categoriesArray } from "../../constants";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { filterSelector } from "../../redux/filters/selectors";
 
 import { setCategory } from "../../redux/filters/slice";

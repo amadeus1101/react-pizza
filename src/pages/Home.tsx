@@ -1,18 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ProductType } from "../@types/ProductType";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { updateCart } from "../utils/updateCart";
-import { getCart } from "../utils/getCart";
-import { getQuery } from "../utils/getQuery";
-import { parseQuery } from "../utils/parseQuery";
+import { getCart, updateCart, getQuery } from "../utils/index";
 //redux
 import { setCartData } from "../redux/cart/slice";
-import { setFilters } from "../redux/filters/slice";
 import { FetchStatus } from "../redux/product/types";
 import { cartSelector } from "../redux/cart/selectors";
 import { fetchData } from "../redux/product/asyncActions";
 import { productSelector } from "../redux/product/selectors";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import { filterSelector, sortSelector } from "../redux/filters/selectors";
 //components
 import Sort from "../components/Sort";
@@ -36,31 +31,20 @@ function Home() {
 
   useEffect(() => {
     if (isMounted.current) {
-      console.log("useEffect #1 -- if");
       updateCart({ cart, totalCount, totalPrice });
     } else {
-      console.log("useEffect #1 -- else");
       dispatch(setCartData(getCart("react-pizza-cart")));
     }
   }, [totalCount]);
 
   useEffect(() => {
     if (isMounted.current) {
-      console.log("useEffect #2");
       navigate(getQuery(category, sortby, page));
     }
     isMounted.current = true;
   }, [category, sortby, page]);
 
   useEffect(() => {
-    if (window.location.search) {
-      console.log("useEffect #3");
-      dispatch(setFilters(parseQuery(window.location.search)));
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log("useEffect #4");
     dispatch(fetchData({ sort: { name, sortby }, category, search, page }));
     window.scrollTo(0, 0);
   }, [category, sortby, page, search]);
@@ -75,7 +59,7 @@ function Home() {
   const skeletons = [...new Array(4)].map((_, index) => (
     <PizzaSkeleton key={index} />
   ));
-  const pizzas = items.map((pizza: ProductType) => (
+  const pizzas = items.map((pizza) => (
     <PizzaBlock
       key={pizza.id}
       {...pizza}

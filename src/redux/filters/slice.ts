@@ -2,14 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SortType } from "../../@types/SortType";
 import { FiltersType } from "../../@types/FiltersType";
 import { QueryType } from "../../@types/QueryType";
-import { sortArray } from "../../constants";
+import { setInitialState } from "./setInitialState";
 
-const initialState: FiltersType = {
-  category: 0,
-  sort: sortArray[0],
-  search: "",
-  page: 1,
-};
+const initialState: FiltersType = setInitialState();
 
 export const filterSlice = createSlice({
   name: "filter",

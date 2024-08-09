@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../redux/store";
 import { CartItemType } from "../@types/CartItemType";
 //redux
 import { cartSelector } from "../redux/cart/selectors";

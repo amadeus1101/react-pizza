@@ -1,5 +1,5 @@
 import { Itemtypes } from "../../constants";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../redux/store";
 import { CartItemType } from "../../@types/CartItemType";
 
 import { addItem, minusItem, popItem } from "../../redux/cart/slice";

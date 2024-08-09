@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../redux/store";
 import { Link, useLocation } from "react-router-dom";
 
 import { cartSelector } from "../../redux/cart/selectors";
