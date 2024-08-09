@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { cartSelector } from "../../redux/cart/selectors";
 
 import Input from "../Input";
+import logo from "../../assets/img/pizza-logo.svg";
 
 const Header: React.FC = () => {
   const { totalCount, totalPrice } = useAppSelector(cartSelector);
@@ -15,7 +16,7 @@ const Header: React.FC = () => {
       <div className="container">
         <Link to="/" reloadDocument={true}>
           <div className="header__logo">
-            <img width="38" src="./img/pizza-logo.svg" alt="Pizza logo" />
+            <img width="38" src={logo} alt="Pizza logo" />
             <div>
               <h1>React Pizza</h1>
               <p>самая вкусная пицца во вселенной</p>

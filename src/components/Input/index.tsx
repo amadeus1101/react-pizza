@@ -3,6 +3,9 @@ import { useAppDispatch } from "../../redux/store";
 
 import { setSearch } from "../../redux/filters/slice";
 
+import search_icon from "../../assets/img/search.png";
+import close_icon from "../../assets/img/close.png";
+
 const Input: React.FC = React.memo(() => {
   const [searchValue, setSearchValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +26,7 @@ const Input: React.FC = React.memo(() => {
   return (
     <div className="search_input">
       <div className="search-icon">
-        <img src="img/search.png" alt="search-icon" />
+        <img src={search_icon} alt="search-icon" />
       </div>
       <input
         ref={inputRef}
@@ -34,7 +37,7 @@ const Input: React.FC = React.memo(() => {
       />
       {searchValue.length > 0 && (
         <div className="close-icon" onClick={onClearInput}>
-          <img src="img/close.png" alt="close-icon" />
+          <img src={close_icon} alt="close-icon" />
         </div>
       )}
     </div>

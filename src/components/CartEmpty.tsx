@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Notification from "./Notification";
+import empty_icon from "../assets/img/empty-cart.png";
 
 const CartEmpty: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const CartEmpty: React.FC = () => {
           "Для того, чтобы заказать пиццу, перейди на главную страницу."
         }
       />
-      <img src="img/empty-cart.png" alt="Empty cart" />
+      <img src={empty_icon} alt="Empty cart" />
       <Link className="button button--black" to="/">
         <span>Вернуться назад</span>
       </Link>
