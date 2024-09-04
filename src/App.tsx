@@ -5,7 +5,7 @@ import "./scss/app.scss";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import NotFound from "./pages/NotFound";
-const Cart = React.lazy(() => import("./pages/Cart"));
+import Cart from "./pages/Cart";
 
 function App() {
   return (
